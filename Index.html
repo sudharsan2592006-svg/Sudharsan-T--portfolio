@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sudharsan | AI & Data Science Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #050a0e;
+      --surface: #0d1b24;
+      --accent: #00d4ff;
+      --accent2: #7f5af0;
+      --accent3: #2cb67d;
+      --text: #e8f4f8;
+      --text-dim: #7a9bb5;
+      --border: rgba(0, 212, 255, 0.15);
+    }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; overflow-x: hidden; cursor: none; }
+
+    .cursor { width: 10px; height: 10px; background: var(--accent); border-radius: 50%; position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9999; mix-blend-mode: screen; }
+    .cursor-ring { width: 36px; height: 36px; border: 1.5px solid var(--accent); border-radius: 50%; position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9998; opacity: 0.5; transition: all 0.25s ease; }
+
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: linear-gradient(rgba(0,212,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0,212,255,0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none; z-index: 0;
+    }
+
+    nav {
+      position: fixed; top: 0; width: 100%; z-index: 100;
+      padding: 20px 60px;
+      display: flex; justify-content: space-between; align-items: center;
+      background: rgba(5,10,14,0.85); backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo { font-family: 'Space Mono', monospace; font-size: 1.1rem; color: var(--accent); letter-spacing: 0.1em; }
+    .nav-logo span { color: var(--text-dim); }
+    .nav-links { display: flex; gap: 36px; list-style: none; }
+    .nav-links a { font-family: 'Space Mono', monospace; font-size: 0.78rem; color: var(--text-dim); text-decoration: none; letter-spacing: 0.1em; text-transform: uppercase; transition: color 0.2s; position: relative; }
+    .nav-links a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 1px; background: var(--accent); transition: width 0.3s; }
+    .nav-links a:hover { color: var(--accent); }
+    .nav-links a:hover::after { width: 100%; }
+
+    section { position: relative; z-index: 1; }
+
+    #home { min-height: 100vh; display: flex; align-items: center; padding: 120px 60px 60px; overflow: hidden; }
+    .home-content { max-width: 760px; }
+    .home-tag { font-family: 'Space Mono', monospace; font-size: 0.75rem; color: var(--accent); letter-spacing: 0.25em; text-transform: uppercase; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+    .home-tag::before { content: ''; display: inline-block; width: 30px; height: 1px; background: var(--accent); }
+
+    h1.hero-name { font-family: 'Syne', sans-serif; font-size: clamp(3.5rem, 8vw, 7rem); font-weight: 800; line-height: 0.95; letter-spacing: -0.02em; margin-bottom: 24px; }
+    h1.hero-name .line1 { color: var(--text); display: block; }
+    h1.hero-name .line2 { display: block; background: linear-gradient(90deg, var(--accent), var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+    .hero-desc { font-size: 1.05rem; color: var(--text-dim); line-height: 1.7; max-width: 500px; margin-bottom: 40px; font-weight: 300; }
+    .hero-btns { display: flex; gap: 16px; flex-wrap: wrap; }
+
+    .btn-primary { padding: 13px 32px; background: var(--accent); color: var(--bg); font-family: 'Space Mono', monospace; font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; border: none; cursor: none; transition: all 0.25s; clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px)); }
+    .btn-primary:hover { background: var(--accent2); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(127,90,240,0.4); }
+    .btn-outline { padding: 13px 32px; border: 1px solid var(--accent); color: var(--accent); font-family: 'Space Mono', monospace; font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; cursor: none; transition: all 0.25s; clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px)); }
+    .btn-outline:hover { background: rgba(0,212,255,0.08); transform: translateY(-2px); }
+
+    .orb { position: absolute; border-radius: 50%; filter: blur(80px); pointer-events: none; animation: drift 8s ease-in-out infinite alternate; }
+    .orb1 { width: 400px; height: 400px; background: rgba(0,212,255,0.07); top: 10%; right: -100px; }
+    .orb2 { width: 300px; height: 300px; background: rgba(127,90,240,0.08); bottom: 10%; right: 20%; animation-delay: 2s; }
+    @keyframes drift { from { transform: translate(0,0); } to { transform: translate(20px,-30px); } }
+
+    .scroll-indicator { position: absolute; bottom: 40px; left: 60px; display: flex; align-items: center; gap: 12px; font-family: 'Space Mono', monospace; font-size: 0.7rem; color: var(--text-dim); letter-spacing: 0.15em; animation: bounceY 2s infinite; }
+    .scroll-line { width: 40px; height: 1px; background: var(--text-dim); }
+    @keyframes bounceY { 0%,100% { transform: translateY(0); } 50% { transform: translateY(6px); } }
+
+    #about { padding: 100px 60px; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+    .section-label { font-family: 'Space Mono', monospace; font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--accent); margin-bottom: 16px; }
+    h2.section-title { font-family: 'Syne', sans-serif; font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; line-height: 1.1; margin-bottom: 24px; }
+    .about-text { color: var(--text-dim); line-height: 1.8; font-size: 0.98rem; margin-bottom: 20px; font-weight: 300; }
+
+    .about-card { background: var(--surface); border: 1px solid var(--border); padding: 32px; clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px)); position: relative; }
+    .about-card::before { content: ''; position: absolute; top: 0; right: 0; width: 16px; height: 16px; border-top: 1px solid var(--accent); border-right: 1px solid var(--accent); }
+    .about-card::after { content: ''; position: absolute; bottom: 0; left: 0; width: 16px; height: 16px; border-bottom: 1px solid var(--accent); border-left: 1px solid var(--accent); }
+    .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .info-label { font-family: 'Space Mono', monospace; font-size: 0.65rem; color: var(--accent); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 6px; }
+    .info-value { font-size: 0.9rem; color: var(--text); }
+    .divider { height: 1px; background: var(--border); margin: 24px 0; }
+
+    #skills { padding: 100px 60px; }
+    .skills-header { text-align: center; margin-bottom: 60px; }
+    .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; }
+
+    .skill-card { background: var(--surface); border: 1px solid var(--border); padding: 28px; transition: all 0.3s; position: relative; overflow: hidden; clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 14px 100%, 0 calc(100% - 14px)); }
+    .skill-card::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(0,212,255,0.04), transparent); opacity: 0; transition: opacity 0.3s; }
+    .skill-card:hover { border-color: var(--accent); transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,212,255,0.1); }
+    .skill-card:hover::before { opacity: 1; }
+    .skill-cat { font-family: 'Space Mono', monospace; font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; }
+    .skill-name { font-family: 'Syne', sans-serif; font-size: 1.15rem; font-weight: 700; margin-bottom: 16px; }
+    .skill-bar-wrap { background: rgba(255,255,255,0.06); height: 4px; border-radius: 2px; overflow: hidden; }
+    .skill-bar { height: 100%; border-radius: 2px; background: linear-gradient(90deg, var(--accent), var(--accent2)); width: 0%; transition: width 1.2s cubic-bezier(0.4,0,0.2,1); }
+    .skill-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+    .skill-tag { font-family: 'Space Mono', monospace; font-size: 0.65rem; padding: 4px 10px; background: rgba(0,212,255,0.07); border: 1px solid rgba(0,212,255,0.2); color: var(--text-dim); letter-spacing: 0.05em; }
+
+    #projects { padding: 100px 60px; }
+    .projects-header { text-align: center; margin-bottom: 60px; }
+    .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 28px; }
+
+    .project-card { background: var(--surface); border: 1px solid var(--border); padding: 32px; transition: all 0.3s; clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 0 100%); position: relative; overflow: hidden; }
+    .project-card::after { content: ''; position: absolute; top: 0; right: 0; width: 0; height: 0; border-style: solid; border-width: 0 16px 16px 0; border-color: transparent var(--accent) transparent transparent; opacity: 0.5; }
+    .project-card:hover { border-color: var(--accent2); transform: translateY(-6px); box-shadow: 0 16px 50px rgba(127,90,240,0.15); }
+    .project-num { font-family: 'Space Mono', monospace; font-size: 0.65rem; color: var(--accent); letter-spacing: 0.2em; margin-bottom: 12px; }
+    .project-title { font-family: 'Syne', sans-serif; font-size: 1.3rem; font-weight: 700; margin-bottom: 12px; }
+    .project-desc { font-size: 0.88rem; color: var(--text-dim); line-height: 1.7; margin-bottom: 20px; font-weight: 300; }
+    .project-tech { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
+    .tech-badge { font-family: 'Space Mono', monospace; font-size: 0.62rem; padding: 4px 10px; background: rgba(127,90,240,0.12); border: 1px solid rgba(127,90,240,0.25); color: #b49af5; letter-spacing: 0.05em; }
+    .project-link { font-family: 'Space Mono', monospace; font-size: 0.72rem; color: var(--accent); text-decoration: none; letter-spacing: 0.1em; display: flex; align-items: center; gap: 8px; transition: gap 0.2s; }
+    .project-link:hover { gap: 14px; }
+
+    #contact { padding: 100px 60px; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+    .contact-note { color: var(--text-dim); line-height: 1.8; font-size: 0.98rem; font-weight: 300; margin-bottom: 40px; }
+    .contact-links { display: flex; flex-direction: column; gap: 16px; }
+    .contact-link-item { display: flex; align-items: center; gap: 16px; padding: 16px 20px; background: var(--surface); border: 1px solid var(--border); text-decoration: none; transition: all 0.25s; }
+    .contact-link-item:hover { border-color: var(--accent); background: rgba(0,212,255,0.04); transform: translateX(6px); }
+    .link-icon { width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; background: rgba(0,212,255,0.1); color: var(--accent); font-size: 1rem; flex-shrink: 0; }
+    .link-label { font-family: 'Space Mono', monospace; font-size: 0.65rem; color: var(--text-dim); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 3px; }
+    .link-value { font-size: 0.88rem; color: var(--text); word-break: break-all; }
+
+    .contact-form { display: flex; flex-direction: column; gap: 20px; }
+    .form-group { display: flex; flex-direction: column; gap: 8px; }
+    .form-label { font-family: 'Space Mono', monospace; font-size: 0.65rem; color: var(--accent); letter-spacing: 0.2em; text-transform: uppercase; }
+    .form-input, .form-textarea { background: var(--surface); border: 1px solid var(--border); color: var(--text); padding: 14px 18px; font-family: 'Inter', sans-serif; font-size: 0.9rem; transition: border-color 0.2s; outline: none; resize: none; }
+    .form-input:focus, .form-textarea:focus { border-color: var(--accent); }
+    .form-textarea { min-height: 120px; }
+    .form-btn { padding: 14px 32px; background: linear-gradient(90deg, var(--accent), var(--accent2)); color: var(--bg); font-family: 'Space Mono', monospace; font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase; border: none; cursor: none; transition: all 0.3s; clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px)); align-self: flex-start; }
+    .form-btn:hover { opacity: 0.88; transform: translateY(-2px); box-shadow: 0 8px 28px rgba(0,212,255,0.3); }
+
+    footer { border-top: 1px solid var(--border); padding: 28px 60px; display: flex; justify-content: space-between; align-items: center; position: relative; z-index: 1; }
+    .footer-text { font-family: 'Space Mono', monospace; font-size: 0.7rem; color: var(--text-dim); letter-spacing: 0.1em; }
+    .footer-accent { color: var(--accent); }
+
+    .fade-up { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 768px) {
+      nav { padding: 16px 24px; }
+      .nav-links { gap: 20px; }
+      #home { padding: 100px 24px 60px; }
+      #about { grid-template-columns: 1fr; padding: 60px 24px; gap: 40px; }
+      #skills, #projects { padding: 60px 24px; }
+      #contact { grid-template-columns: 1fr; padding: 60px 24px; gap: 40px; }
+      footer { padding: 20px 24px; flex-direction: column; gap: 8px; text-align: center; }
+      .scroll-indicator { left: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <nav>
+    <div class="nav-logo">S<span>.</span>SUDHARSAN</div>
+    <ul class="nav-links">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <section id="home">
+    <div class="orb orb1"></div>
+    <div class="orb orb2"></div>
+    <div class="home-content">
+      <div class="home-tag">B.Tech AI & Data Science · Batch 2024–2028</div>
+      <h1 class="hero-name">
+        <span class="line1">SUDHARSAN</span>
+        <span class="line2">S.</span>
+      </h1>
+      <p class="hero-desc">
+        Aspiring AI & Data Science engineer building intelligent systems, data-driven solutions, and exploring the frontier of machine learning — one model at a time.
+      </p>
+      <div class="hero-btns">
+        <a href="#projects" class="btn-primary">View Projects</a>
+        <a href="#contact" class="btn-outline">Get In Touch</a>
+      </div>
+    </div>
+    <div class="scroll-indicator">
+      <span class="scroll-line"></span>
+      SCROLL
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="fade-up">
+      <div class="section-label">// 01 — About</div>
+      <h2 class="section-title">Who I Am</h2>
+      <p class="about-text">
+        I'm Sudharsan, a passionate 2nd-year B.Tech student specialising in Artificial Intelligence and Data Science at Asian College of Engineering and Technology, Coimbatore.
+      </p>
+      <p class="about-text">
+        I'm deeply curious about how data shapes decisions and how AI can transform industries. I enjoy building projects that bridge theory and real-world applications — from predictive models to intelligent systems.
+      </p>
+    </div>
+    <div class="about-card fade-up">
+      <div class="info-grid">
+        <div class="info-item">
+          <div class="info-label">Degree</div>
+          <div class="info-value">B.Tech — AI & DS</div>
+        </div>
+        <div class="info-item">
+          <div class="info-label">Year</div>
+          <div class="info-value">2nd Year</div>
+        </div>
+        <div class="info-item">
+          <div class="info-label">Batch</div>
+          <div class="info-value">2024 – 2028</div>
+        </div>
+        <div class="info-item">
+          <div class="info-label">Location</div>
+          <div class="info-value">Coimbatore</div>
+        </div>
+      </div>
+      <div class="divider"></div>
+      <div class="info-item" style="margin-bottom:16px;">
+        <div class="info-label">Institution</div>
+        <div class="info-value">Asian College of Engineering and Technology</div>
+      </div>
+      <div class="info-item">
+        <div class="info-label">Pin Code</div>
+        <div class="info-value">641 110</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills">
+    <div class="skills-header fade-up">
+      <div class="section-label">// 02 — Skills</div>
+      <h2 class="section-title">Technical Arsenal</h2>
+    </div>
+    <div class="skills-grid">
+
+      <div class="skill-card fade-up">
+        <div class="skill-cat">Languages</div>
+        <div class="skill-name">Programming</div>
+        <div class="skill-bar-wrap"><div class="skill-bar" data-width="82"></div></div>
+        <div class="skill-tags">
+          <span class="skill-tag">Python</span>
+          <span class="skill-tag">C</span>
+          <span class="skill-tag">SQL</span>
+        </div>
+      </div>
+
+      <div class="skill-card fade-up">
+        <div class="skill-cat">AI / ML</div>
+        <div class="skill-name">Machine Learning</div>
+        <div class="skill-bar-wrap"><div class="skill-bar" data-width="75"></div></div>
+        <div class="skill-tags">
+          <span class="skill-tag">Scikit-learn</span>
+          <span class="skill-tag">TensorFlow</span>
+          <span class="skill-tag">Pandas</span>
+          <span class="skill-tag">NumPy</span>
+        </div>
+      </div>
+
+      <div class="skill-card fade-up">
+        <div class="skill-cat">Visualization</div>
+        <div class="skill-name">Data Analysis</div>
+        <div class="skill-bar-wrap"><div class="skill-bar" data-width="78"></div></div>
+        <div class="skill-tags">
+          <span class="skill-tag">Matplotlib</span>
+          <span class="skill-tag">Seaborn</span>
+          <span class="skill-tag">PowerBI</span>
+        </div>
+      </div>
+
+      <div class="skill-card fade-up">
+        <div class="skill-cat">Tools</div>
+        <div class="skill-name">Dev Tools</div>
+        <div class="skill-bar-wrap"><div class="skill-bar" data-width="70"></div></div>
+        <div class="skill-tags">
+          <span class="skill-tag">Git</span>
+          <span class="skill-tag">GitHub</span>
+          <span class="skill-tag">VS Code</span>
+          <span class="skill-tag">Jupyter</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="projects">
+    <div class="projects-header fade-up">
+      <div class="section-label">// 03 — Projects</div>
+      <h2 class="section-title">What I've Built</h2>
+    </div>
+    <div class="projects-grid">
+
+      <div class="project-card fade-up">
+        <div class="project-num">01</div>
+        <div class="project-title">Student Performance Predictor</div>
+        <p class="project-desc">A machine learning model that predicts student academic performance based on study habits, attendance, and previous scores using regression algorithms.</p>
+        <div class="project-tech">
+          <span class="tech-badge">Python</span>
+          <span class="tech-badge">Scikit-learn</span>
+          <span class="tech-badge">Pandas</span>
+        </div>
+        <a href="#" class="project-link">View Project →</a>
+      </div>
+
+      <div class="project-card fade-up">
+        <div class="project-num">02</div>
+        <div class="project-title">Data Visualization Dashboard</div>
+        <p class="project-desc">An interactive dashboard built to visualize complex datasets with dynamic charts, filters, and insights for real-time data exploration.</p>
+      
